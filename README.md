@@ -12,10 +12,6 @@ The Wildfire Prediction Application is designed to monitor and predict fire-pron
 # 📷Pictures
 
 ### Environmental Data Change Over Time 
-<div style="display: flex; justify-content: space-around;">
-<img src="https://github.com/AirajHussain/WildFire-Prediction-System/blob/main/images/batch1.png" alt="login_page" width="600"/>
-<img src="https://github.com/AirajHussain/WildFire-Prediction-System/blob/main/images/batch2.png" alt="login_page" width="600"/>
-</div>
 
 The images show how environmental data, such as temperature, humidity, and soil moisture, changes over time, highlighting the dynamic conditions that influence wildfire prediction.
 
