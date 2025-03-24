@@ -1,0 +1,144 @@
+/* 📌 Map Container */
+.map-container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 20px auto;
+  position: relative;
+  padding: 20px;
+  text-align: center;
+  border-radius: 10px;
+  background: #fafafa;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* 🗺️ Google Map Styling */
+.map-view {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+}
+
+/* 📊 Info Window Styling */
+.info-window {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  padding: 10px;
+  text-align: left;
+  background: white;
+  border-radius: 5px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* ✅ Table inside hover popup */
+.info-window table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.info-window td {
+  padding: 4px 8px;
+  border-bottom: 1px solid #ddd;
+  font-size: 13px;
+}
+
+/* 📌 Wildfire FWI Legend */
+.legend {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 10px 15px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  font-size: 13px;
+  color: #333;
+}
+
+/* 🔥 Legend Title */
+.legend h4 {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  font-weight: bold;
+  color: #ff5722;
+}
+
+/* 📊 Legend Items */
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+/* 🎨 Legend Colors */
+.legend-color {
+  width: 15px;
+  height: 15px;
+  margin-right: 8px;
+  border-radius: 50%;
+  border: 1px solid #aaa;
+}
+
+/* 🎨 New Risk Colors */
+.legend-color.very-low {
+  background: #1976d2; /* 🔵 Blue */
+}
+.legend-color.low {
+  background: #388e3c; /* 🟢 Green */
+}
+.legend-color.moderate {
+  background: #fbc02d; /* 🟡 Yellow */
+}
+.legend-color.high {
+  background: #fb8c00; /* 🟠 Orange */
+}
+.legend-color.extreme {
+  background: #d32f2f; /* 🔴 Red */
+}
+
+
+/* 🌱 Risk Colors */
+.low {
+  background: green;
+}
+.medium {
+  background: yellow;
+}
+.high {
+  background: red;
+}
+
+/* ✅ Loading text styling */
+.loading-text {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  color: #ff5722;
+  padding: 20px;
+}
+
+/* 🆕 Title Styling */
+.map-title {
+  font-size: 26px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* 🆕 Dropdown Styling */
+select {
+  padding: 8px 12px;
+  font-size: 14px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background: #fff;
+  outline: none;
+}
+
+/* Label Styling */
+label {
+  font-size: 15px;
+  font-weight: 500;
+  color: #444;
+}

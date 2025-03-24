@@ -1,135 +1,145 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Line } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, LineElement, Title, Tooltip, Legend } from 'chart.js';
-import Navbar from '../components/Navbar'; // Assuming you have a Navbar component
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Line } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import Navbar from "../components/Navbar";
+import "./Reports.css"; // ✅ Import custom CSS for styling
 
 // Register Chart.js components
-ChartJS.register(CategoryScale, LinearScale, LineElement, Title, Tooltip, Legend);
-
-import {chart as chartjs} from 'chart.js/auto'
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 function Reports() {
-  const [chartData, setChartData] = useState(null);
+  const [sensorReadings, setSensorReadings] = useState({});
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedBatch, setSelectedBatch] = useState(1); // Track selected batch
-  const [allData, setAllData] = useState([]); // Store all batches data
+  const [selectedBatch, setSelectedBatch] = useState(""); // ✅ Stores selected batch time
+
+  const API_URL = "http://15.223.86.129:5000/sensor-readings"; // ✅ Backend API
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/data')
-      .then(response => {
-        const data = response.data;
-        setAllData(data); // Store all data for later filtering
+    axios
+      .get(API_URL)
+      .then((response) => {
+        console.log("API Response:", response.data); // Debugging log
 
-        // Filter data to only include the selected batch
-        const filteredData = data.filter(item => item.batch_id === selectedBatch);
+        // ✅ Get batch times and set the latest one as default
+        const availableBatches = Object.keys(response.data).sort((a, b) => new Date(b) - new Date(a));
+        if (availableBatches.length > 0) {
+          setSelectedBatch(availableBatches[0]); // ✅ Default to latest batch
+        }
 
-        // Extract data for the chart
-        const labels = filteredData.map(item => new Date(item.received_at).toLocaleString());
-        const airTempData = filteredData.map(item => item.air_temp);
-        const airHumidityData = filteredData.map(item => item.air_humidity);
-        const soilMoistureData = filteredData.map(item => item.soil_moisture);
-        const airPressureData = filteredData.map(item => item.air_pressure);
-
-        // Calculate the Fire Index based on a formula (this is just an example formula)
-        const fireIndexData = airTempData.map((temp, index) => {
-          const humidity = airHumidityData[index];
-          const moisture = soilMoistureData[index];
-          const pressure = airPressureData[index];
-
-          // Example formula for Fire Index (adjust as needed)
-          const fireIndex = ((temp - 32) / 2) + (humidity / 100) + (moisture / 100) + (pressure / 1000);
-          return fireIndex;
-        });
-
-        // Update state with filtered chart data
-        setChartData({
-          airTempData,
-          airHumidityData,
-          soilMoistureData,
-          airPressureData,
-          fireIndexData,
-          labels
-        });
+        setSensorReadings(response.data);
+        setLoading(false);
       })
-      .catch(err => {
-        console.error('Error fetching data:', err);
-        setError('Failed to load chart data. Please try again later.');
+      .catch((err) => {
+        console.error("Error fetching data:", err);
+        setError("Failed to load chart data. Please try again later.");
+        setLoading(false);
       });
-  }, [selectedBatch]); // Refetch data whenever the batch changes
+  }, []);
 
-  // Create a line chart dataset for each metric
-  const createChartData = (label, data, color) => ({
-    labels: chartData.labels,
-    datasets: [
-      {
-        label: label,
-        data: data,
-        borderColor: color,
-        fill: false,
-        tension: 0.1,
-      }
-    ]
-  });
+  if (loading)
+    return <div className="loading-container"><p>📡 Loading chart data...</p></div>;
+  if (error)
+    return <div className="error-container"><p>⚠️ {error}</p></div>;
+  if (!sensorReadings || Object.keys(sensorReadings).length === 0)
+    return <div className="error-container"><p>⚠️ No data available.</p></div>;
 
-  // Handle batch selection change
-  const handleBatchChange = (event) => {
-    setSelectedBatch(Number(event.target.value)); // Update selected batch based on dropdown
+  // ✅ Create chart data function
+  const createChartData = (label, data, color) => {
+    // ✅ Sort data by recorded_at in ASCENDING order before mapping
+    const sortedData = data.sort((a, b) => new Date(a.recorded_at) - new Date(b.recorded_at));
+  
+    return {
+      labels: sortedData.map((entry) =>
+        new Date(entry.recorded_at).toLocaleTimeString("en-US", { timeZone: "America/Toronto" })
+      ),
+      datasets: [
+        {
+          label: label,
+          data: sortedData.map((entry) => entry.value),
+          borderColor: color,
+          backgroundColor: color + "20",
+          fill: true,
+          tension: 0.3,
+          pointRadius: 3,
+        },
+      ],
+    };
   };
+  
 
   return (
-    <div>
+    <div className="reports-container">
       <Navbar />
-      {error ? (
-        <p>{error}</p>
-      ) : chartData ? (
-        <div style={{ width: '80%', margin: '0 auto', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
-          {/* Dropdown for selecting batch */}
-          <div style={{ marginBottom: '20px' }}>
-            <label htmlFor="batchSelect">Select Batch: </label>
-            <select id="batchSelect" value={selectedBatch} onChange={handleBatchChange}>
-              {/* Dynamically generate batch options from the data */}
-              {[...new Set(allData.map(item => item.batch_id))].map(batch => (
-                <option key={batch} value={batch}>
-                  Batch {batch}
-                </option>
-              ))}
-            </select>
-          </div>
+      <h1 className="reports-title">📊 Batched Charts of System Sensor Data</h1>
+      <p className="subtitle">Node batch time displayed in (EST</p>
 
-          {/* Fire Index Line Chart (Moved up) */}
-          <div style={{ marginBottom: '30px', flex: '1 1 45%' }}>
-            <h3>Fire Index</h3>
-            <Line data={createChartData('Fire Index', chartData.fireIndexData, 'rgb(255, 159, 64)')} />
-          </div>
+      {/* ✅ Batch Selection Dropdown */}
+      <div className="dropdown-wrapper">
+  <label>Select Batch Time:</label>
+  <select 
+    value={selectedBatch || ""}
+    onChange={(e) => setSelectedBatch(e.target.value)}
+  >
+    {Object.keys(sensorReadings).sort((a, b) => new Date(b) - new Date(a)).map(batchTime => (
+      <option key={batchTime} value={batchTime}>
+        {new Date(batchTime).toLocaleString("en-US", { timeZone: "America/Toronto", hour12: true })}
+      </option>
+    ))}
+  </select>
+</div>
 
-          {/* Air Temperature Line Chart (Moved down) */}
-          <div style={{ marginBottom: '30px', flex: '1 1 45%' }}>
-            <h3>Air Temperature (°C)</h3>
-            <Line data={createChartData('Air Temperature (°C)', chartData.airTempData, 'rgb(255, 99, 132)')} />
-          </div>
+      {/* ✅ Display charts per node for selected batch */}
+      {selectedBatch && sensorReadings[selectedBatch] &&
+        Object.keys(sensorReadings[selectedBatch]).map(node_id => (
+          <div key={node_id} className="node-reports">
+            <h2>Node {node_id}</h2>
+            <div className="chart-grid">
+              
+              {/* 🔥 Fire Weather Index (FWI) */}
+              <div className="chart-card">
+                <h3>🔥 Fire Weather Index (FWI)</h3>
+                <Line data={createChartData("FWI", sensorReadings[selectedBatch][node_id].map(r => ({ value: r.fwi, recorded_at: r.recorded_at })), "rgb(255, 87, 34)")} />
+              </div>
 
-          {/* Air Humidity Line Chart */}
-          <div style={{ marginBottom: '30px', flex: '1 1 45%' }}>
-            <h3>Air Humidity (%)</h3>
-            <Line data={createChartData('Air Humidity (%)', chartData.airHumidityData, 'rgb(54, 162, 235)')} />
-          </div>
+              {/* 🌡️ Temperature */}
+              <div className="chart-card">
+                <h3>🌡️ Temperature (°C)</h3>
+                <Line data={createChartData("Temperature", sensorReadings[selectedBatch][node_id].map(r => ({ value: r.temperature, recorded_at: r.recorded_at })), "rgb(244, 67, 54)")} />
+              </div>
 
-          {/* Soil Moisture Line Chart */}
-          <div style={{ marginBottom: '30px', flex: '1 1 45%' }}>
-            <h3>Soil Moisture (%)</h3>
-            <Line data={createChartData('Soil Moisture (%)', chartData.soilMoistureData, 'rgb(75, 192, 192)')} />
-          </div>
+              {/* 💧 Humidity */}
+              <div className="chart-card">
+                <h3>💧 Humidity (%)</h3>
+                <Line data={createChartData("Humidity", sensorReadings[selectedBatch][node_id].map(r => ({ value: r.humidity, recorded_at: r.recorded_at })), "rgb(33, 150, 243)")} />
+              </div>
 
-          {/* Air Pressure Line Chart */}
-          <div style={{ marginBottom: '30px', flex: '1 1 45%' }}>
-            <h3>Air Pressure (hPa)</h3>
-            <Line data={createChartData('Air Pressure (hPa)', chartData.airPressureData, 'rgb(153, 102, 255)')} />
+              {/* 🌱 Soil Moisture */}
+              <div className="chart-card">
+                <h3>🌱 Soil Moisture (%)</h3>
+                <Line data={createChartData("Soil Moisture", sensorReadings[selectedBatch][node_id].map(r => ({ value: r.soil_moisture_percent, recorded_at: r.recorded_at })), "rgb(76, 175, 80)")} />
+              </div>
+
+              {/* 🌪️ Air Pressure */}
+              <div className="chart-card">
+                <h3>🌪️ Air Pressure (hPa)</h3>
+                <Line data={createChartData("Air Pressure", sensorReadings[selectedBatch][node_id].map(r => ({ value: r.pressure, recorded_at: r.recorded_at })), "rgb(123, 31, 162)")} />
+              </div>
+
+            </div>
           </div>
-        </div>
-      ) : (
-        <p>Loading chart data...</p>
-      )}
+        ))
+      }
     </div>
   );
 }

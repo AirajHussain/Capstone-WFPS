@@ -1,0 +1,166 @@
+.tables-container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  text-align: center;
+}
+
+h1.title {
+  position: relative;
+  margin-bottom: 10px;
+  font-size: 2rem;
+  color: #333;
+}
+
+.subtitle {
+  margin-bottom: 20px;
+  color: #666;
+  font-style: italic;
+}
+
+.dropdown-label {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.batch-select {
+  padding: 8px 12px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+}
+
+.node-table {
+  margin-bottom: 40px;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 20px;
+  background: #fafafa;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.table-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: auto;
+}
+
+.sensor-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.sensor-table th {
+  background: #ff5722;
+  color: white;
+  padding: 12px;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.sensor-table td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.sensor-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.fwi-badge {
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-weight: bold;
+  color: white;
+  display: inline-block;
+}
+
+/* 🔥 Risk Levels */
+.very-low-risk {
+  background-color: #2196f3; /* Blue */
+}
+
+.low-risk {
+  background-color: #388e3c; /* Green */
+}
+
+.moderate-risk {
+  background-color: #fbc02d; /* Yellow */
+  color: black;
+}
+
+.high-risk {
+  background-color: #fb8c00; /* Orange */
+}
+
+.extreme-risk {
+  background-color: #d32f2f; /* Red */
+}
+
+.no-data {
+  font-style: italic;
+  color: #999;
+}
+
+.fade-in {
+  animation: fadeIn 0.4s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .sensor-table {
+    font-size: 14px;
+  }
+
+  .batch-select {
+    width: 100%;
+    margin: 10px 0;
+  }
+}
+
+.legend {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: left;
+  padding-left: 10px;
+}
+
+.legend h4 {
+  margin-bottom: 8px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  font-size: 0.95rem;
+  margin-bottom: 4px;
+}
+
+.legend-color {
+  width: 20px;
+  height: 14px;
+  border-radius: 4px;
+  margin-right: 8px;
+  display: inline-block;
+}
+
+.legend-color.very-low-risk { background-color: #1976d2; }
+.legend-color.low-risk      { background-color: #388e3c; }
+.legend-color.moderate-risk { background-color: #fbc02d; }
+.legend-color.high-risk     { background-color: #fb8c00; }
+.legend-color.extreme-risk  { background-color: #d32f2f; }
+

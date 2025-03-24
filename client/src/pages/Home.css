@@ -1,6 +1,104 @@
-h1 {
-    position: absolute; /* Allow precise positioning */
-    top: 50%;           /* Move down 50% of the viewport */
-    left: 50%;          /* Move right 50% of the viewport */
-    transform: translate(-50%, -50%); /* Shift it back by 50% of its width and height */
+/* Main Home Container */
+.Home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 93.9vh;
+    background: linear-gradient(to right, #e0f7fa, #ffffff);
+    padding: 60px 20px;
+}
+
+/* Center Content */
+.home-content {
+    max-width: 1200px;
+    width: 100%;
+    background: #ffffff;
+    padding: 50px;
+    border-radius: 16px;
+    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1);
+    transition: 0.3s ease;
+}
+
+/* Title */
+.Home h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #002244;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Subheading */
+.Home p {
+    font-size: 1.25rem;
+    color: #444;
+    max-width: 900px;
+    line-height: 1.7;
+    margin: 0 auto 30px;
+    text-align: center;
+}
+
+/* Buttons */
+.home-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+}
+
+.home-btn {
+    text-decoration: none;
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border: none;
+    color: white;
+    background: #006699;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.home-btn:hover {
+    transform: translateY(-3px);
+    background: #004466;
+}
+
+/* Information Cards */
+.info-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.info-card {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 14px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+    width: 300px;
+    text-align: center;
+    transition: transform 0.3s ease;
+    border-top: 5px solid #006699;
+}
+
+.info-card:hover {
+    transform: translateY(-8px);
+}
+
+/* Card Titles */
+.info-card h3 {
+    font-size: 1.3rem;
+    color: #006699;
+    margin-bottom: 10px;
+}
+
+/* Card Description */
+.info-card p {
+    font-size: 1rem;
+    color: #666;
 }

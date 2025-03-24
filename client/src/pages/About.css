@@ -1,0 +1,65 @@
+.about-container {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 20px;
+    color: #333;
+    font-family: 'Segoe UI', sans-serif;
+    line-height: 1.7;
+  }
+  
+  .about-title {
+    font-size: 3rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .fire-icon {
+    margin-left: 12px;
+    color: #d32f2f;
+  }
+  
+  .about-intro {
+    font-size: 1.2rem;
+    text-align: center;
+    margin-bottom: 40px;
+    color: #555;
+  }
+  
+  .about-section {
+    margin-bottom: 45px;
+  }
+  
+  .about-section h2 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    color: #ff6d00;
+  }
+  
+  .section-icon {
+    margin-right: 10px;
+    font-size: 1.5rem;
+  }
+  
+  .feature-list {
+    list-style-type: disc;
+    padding-left: 30px;
+    margin-top: 10px;
+  }
+  
+  .feature-list li {
+    margin-bottom: 10px;
+  }
+  
+  .about-cta {
+    background-color: #fbe9e7;
+    border-left: 5px solid #ff6d00;
+    padding: 25px;
+    border-radius: 8px;
+  }
+  
