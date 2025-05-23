@@ -22,6 +22,34 @@ The Wildfire Prediction System is designed to monitor and predict fire-prone con
 - RESTful API endpoints for sensor readings and historical data retrieval
 - Automated data filtering to prevent redundant entries (4-minute minimum interval)
 
+# 📷 Pictures
+
+### Main Page
+
+<div style="display: flex; justify-content: space-around;">
+<img src="https://github.com/AirajHussain/Capstone-WFPS/blob/main/images/mainpage.png" alt="login_page" />
+</div>
+
+### Reports Page
+<div style="display: flex; justify-content: space-around;">
+<img src="https://github.com/AirajHussain/Capstone-WFPS/blob/main/images/reportspage.png" alt="login_page" />
+</div>
+
+### Tables Page
+<div style="display: flex; justify-content: space-around;">
+<img src="https://github.com/AirajHussain/Capstone-WFPS/blob/main/images/tablespage.png" alt="login_page" />
+</div>
+
+### Mapsview Page
+<div style="display: flex; justify-content: space-around;">
+<img src="https://github.com/AirajHussain/Capstone-WFPS/blob/main/images/mapviewpage.png" alt="login_page" />
+</div>
+
+### About Us Page
+<div style="display: flex; justify-content: space-around;">
+<img src="https://github.com/AirajHussain/Capstone-WFPS/blob/main/images/aboutuspage.png" alt="login_page" />
+</div>
+
 ## 🛠️ Project Structure
 
 ```
